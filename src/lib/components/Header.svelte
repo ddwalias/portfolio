@@ -17,8 +17,8 @@
 		Portfolio
 	</a>
 
-	<nav>
-		<ul class="flex gap-6">
+	<nav class="scrollbar-hide -mx-6 overflow-x-auto px-6 sm:mx-0 sm:px-0">
+		<ul class="flex gap-6 whitespace-nowrap">
 			{#each navItems as item}
 				<li>
 					<a
