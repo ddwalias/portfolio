@@ -7,6 +7,9 @@
 
 	let { children } = $props();
 
+	let mouseX = $state(0);
+	let mouseY = $state(0);
+
 	onNavigate((navigation) => {
 		if (!document.startViewTransition) return;
 
@@ -18,6 +21,13 @@
 		});
 	});
 </script>
+
+<svelte:window
+	onmousemove={(e) => {
+		mouseX = e.clientX;
+		mouseY = e.clientY;
+	}}
+/>
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
@@ -31,11 +41,17 @@
 
 <div
 	class="relative flex min-h-screen flex-col bg-[var(--color-background)] font-sans text-[var(--color-foreground)] selection:bg-white/20"
+	style="--mouse-x: {mouseX}px; --mouse-y: {mouseY}px;"
 >
 	<!-- Background Grid with Vignette Mask -->
 	<div
-		class="pointer-events-none fixed inset-0 z-0 opacity-50"
-		style="background-image: var(--pattern-grid); background-size: 40px 40px; mask-image: radial-gradient(circle at center, black 40%, transparent 100%);"
+		class="pointer-events-none fixed inset-0 z-0 opacity-100 transition-opacity duration-500"
+		style="
+			background-image: var(--pattern-grid);
+			background-size: 40px 40px;
+			mask-image: radial-gradient(circle 500px at {mouseX}px {mouseY}px, black 0%, transparent 100%);
+			-webkit-mask-image: radial-gradient(circle 500px at {mouseX}px {mouseY}px, black 0%, transparent 100%);
+		"
 	></div>
 
 	<main class="relative z-10 mx-auto w-full max-w-5xl flex-1 px-6 py-12">
