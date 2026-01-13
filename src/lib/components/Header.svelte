@@ -23,7 +23,7 @@
 				<li>
 					<a
 						href={item.href}
-						class="text-sm font-medium text-[var(--color-muted)] transition-colors hover:text-[var(--color-foreground)]"
+						class="text-sm font-medium text-[var(--color-muted)] transition-colors hover:text-[var(--color-primary)]"
 					>
 						{item.label}
 					</a>

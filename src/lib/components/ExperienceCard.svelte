@@ -17,13 +17,13 @@
 
 	<!-- Dot -->
 	<div
-		class="absolute top-8 left-[5px] h-1.5 w-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-background)] transition-colors group-hover:border-white group-hover:bg-white sm:left-[-3px] {active
-			? 'border-green-500 bg-green-500'
+		class="absolute top-8 left-[5px] h-1.5 w-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-background)] transition-colors group-hover:border-[var(--color-primary)] group-hover:bg-[var(--color-primary)] sm:left-[-3px] {active
+			? 'border-[var(--color-primary)] bg-[var(--color-primary)] shadow-[0_0_8px_var(--color-primary)]'
 			: ''}"
 	></div>
 
 	<div
-		class="flex flex-col gap-4 border border-[var(--color-border)] bg-black/20 p-6 backdrop-blur-sm transition-all hover:border-white/40 hover:bg-white/[0.02]"
+		class="flex flex-col gap-4 border border-[var(--color-border)] bg-black/20 p-6 backdrop-blur-sm transition-all duration-300 hover:border-[var(--color-primary)] hover:bg-white/[0.02] hover:shadow-[0_0_15px_var(--color-primary-glow)]"
 	>
 		<div class="flex flex-col justify-between gap-1 sm:flex-row sm:items-baseline">
 			<h3 class="text-lg font-bold tracking-tight text-white">

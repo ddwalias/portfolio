@@ -13,20 +13,22 @@
 
 <a href={`/blog/${slug}`} class="group mb-6 block">
 	<article
-		class="border border-[var(--color-border)] p-5 transition-all duration-200 hover:border-white/40 hover:bg-white/[0.02]"
+		class="border border-[var(--color-border)] p-5 transition-all duration-300 hover:border-[var(--color-primary)] hover:bg-white/[0.02] hover:shadow-[0_0_15px_var(--color-primary-glow)]"
 	>
 		<div class="mb-3 flex items-center justify-between">
 			<time datetime={date} class="font-mono text-xs text-[var(--color-muted)]">
 				{formattedDate}
 			</time>
 			<span
-				class="font-mono text-xs text-[var(--color-muted)] opacity-0 transition-opacity group-hover:opacity-100"
+				class="font-mono text-xs text-[var(--color-primary)] opacity-0 transition-opacity group-hover:opacity-100"
 			>
 				Read Post ->
 			</span>
 		</div>
 
-		<h2 class="mb-2 text-lg font-semibold tracking-tight transition-colors group-hover:text-white">
+		<h2
+			class="mb-2 text-lg font-semibold tracking-tight transition-colors group-hover:text-[var(--color-primary)]"
+		>
 			{title}
 		</h2>
 

@@ -12,7 +12,7 @@
 	<BentoItem span="md:col-span-2" title="About">
 		<div class="flex h-full flex-col justify-center">
 			<h1 class="mb-4 text-3xl leading-tight font-bold tracking-tight text-balance">
-				Engineering precision.<br />
+				<span class="text-[var(--color-primary)]">Engineering precision.</span><br />
 				<span class="text-[var(--color-muted)]">Design clarity.</span>
 			</h1>
 			<p class="max-w-prose text-base leading-relaxed font-light text-[var(--color-muted)]">
@@ -59,13 +59,13 @@
 		<div class="flex h-full flex-wrap items-center gap-x-6 gap-y-2">
 			<a
 				href="https://github.com"
-				class="group/link flex items-center gap-1 font-mono text-sm text-[var(--color-muted)] transition-colors hover:text-white"
+				class="group/link flex items-center gap-1 font-mono text-sm text-[var(--color-muted)] transition-colors hover:text-[var(--color-primary)]"
 			>
 				GitHub <span class="transition-transform group-hover/link:translate-x-0.5">-></span>
 			</a>
 			<a
 				href="https://twitter.com"
-				class="group/link flex items-center gap-1 font-mono text-sm text-[var(--color-muted)] transition-colors hover:text-white"
+				class="group/link flex items-center gap-1 font-mono text-sm text-[var(--color-muted)] transition-colors hover:text-[var(--color-primary)]"
 			>
 				Twitter <span class="transition-transform group-hover/link:translate-x-0.5">-></span>
 			</a>
@@ -86,7 +86,7 @@
 		</h2>
 		<a
 			href="/blog"
-			class="font-mono text-sm text-[var(--color-muted)] transition-colors hover:text-white"
+			class="font-mono text-sm text-[var(--color-muted)] transition-colors hover:text-[var(--color-primary)]"
 			>View All -></a
 		>
 	</header>
