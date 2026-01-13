@@ -43,14 +43,13 @@
 	class="relative flex min-h-screen flex-col bg-[var(--color-background)] font-sans text-[var(--color-foreground)] selection:bg-white/20"
 	style="--mouse-x: {mouseX}px; --mouse-y: {mouseY}px;"
 >
-	<!-- Background Grid with Vignette Mask -->
 	<div
 		class="pointer-events-none fixed inset-0 z-0 opacity-100 transition-opacity duration-500"
 		style="
-			background-image: var(--pattern-grid);
-			background-size: 40px 40px;
-			mask-image: radial-gradient(circle 500px at {mouseX}px {mouseY}px, black 0%, transparent 100%);
-			-webkit-mask-image: radial-gradient(circle 500px at {mouseX}px {mouseY}px, black 0%, transparent 100%);
+			background-image: var(--pattern-dots);
+			background-size: 24px 24px;
+			mask-image: radial-gradient(circle 300px at {mouseX}px {mouseY}px, black 0%, transparent 100%);
+			-webkit-mask-image: radial-gradient(circle 300px at {mouseX}px {mouseY}px, black 0%, transparent 100%);
 		"
 	></div>
 
