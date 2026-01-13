@@ -112,7 +112,7 @@
   .spotlight-border::before {
     content: "";
     position: absolute;
-    inset: 0;
+    inset: -2px; /* Cover the parent border */
     padding: 2px; /* Increase width to fix rounded corner visual artifacts */
     border-radius: inherit;
     background: radial-gradient(
