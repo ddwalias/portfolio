@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { enhanceCodeBlocks } from '$lib/actions/enhance-code-blocks';
+	import ReadingProgress from '$lib/components/ReadingProgress.svelte';
 	import type { PageData } from './$types';
 
 	interface Heading {
@@ -11,6 +12,7 @@
 
 	let { data }: { data: PageData } = $props();
 	let { title, date } = $derived(data.meta);
+	let Content = $derived(data.content);
 
 	// Derived state for formatting date
 	let formattedDate = $derived(
@@ -53,6 +55,7 @@
 </script>
 
 <article class="animate-in fade-in slide-in-from-bottom-4 duration-700">
+	<ReadingProgress />
 	<a
 		href="/blog"
 		class="mb-8 inline-flex items-center gap-2 font-mono text-xs text-[var(--color-muted)] transition-colors hover:text-[var(--color-primary)]"

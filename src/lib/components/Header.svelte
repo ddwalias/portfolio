@@ -1,18 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
-
-	interface NavItem {
-		label: string;
-		href: string;
-	}
-
-	let navItems: NavItem[] = [
-		{ label: 'Home', href: '/' },
-		{ label: 'Work', href: '/work' },
-		{ label: 'Blog', href: '/blog' },
-		{ label: 'About', href: '/about' }
-	];
+	import { navLinks } from '$lib/config';
 
 	let showHeader = $state(true);
 	let lastScrollY = 0;
@@ -51,7 +40,7 @@
 >
 	<nav>
 		<ul class="flex items-center gap-1">
-			{#each navItems as item}
+			{#each navLinks.filter((l) => !l.hideInHeader) as item}
 				<li>
 					<a
 						href={item.href}

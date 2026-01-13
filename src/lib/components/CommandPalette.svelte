@@ -1,25 +1,13 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-
-	interface Link {
-		label: string;
-		href: string;
-	}
+	import { navLinks } from '$lib/config';
 
 	let open = $state(false);
 	let query = $state('');
 	let selectedIndex = $state(0);
 
-	const links: Link[] = [
-		{ label: 'Home', href: '/' },
-		{ label: 'Work', href: '/work' },
-		{ label: 'Blog', href: '/blog' },
-		{ label: 'About', href: '/about' },
-		{ label: 'Contact', href: '/#connect' }
-	];
-
 	let filteredLinks = $derived(
-		links.filter((l) => l.label.toLowerCase().includes(query.toLowerCase()))
+		navLinks.filter((l) => l.label.toLowerCase().includes(query.toLowerCase()))
 	);
 
 	function handleKeydown(e: KeyboardEvent) {
@@ -60,15 +48,23 @@
 
 {#if open}
 	<div
-		role="dialog"
-		aria-modal="true"
+		role="button"
+		tabindex="0"
 		class="fixed inset-0 z-[100] flex items-start justify-center bg-black/60 pt-[20vh] backdrop-blur-sm transition-all"
 		onclick={() => (open = false)}
+		onkeydown={(e) => {
+			if (e.key === 'Enter' || e.key === ' ') {
+				open = false;
+			}
+		}}
 	>
 		<div
 			class="animate-in fade-in zoom-in-95 relative w-full max-w-lg overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-background)] shadow-2xl duration-200"
 			onclick={(e) => e.stopPropagation()}
-			role="presentation"
+			onkeydown={(e) => e.stopPropagation()}
+			role="dialog"
+			aria-modal="true"
+			tabindex="-1"
 		>
 			<div class="flex items-center border-b border-[var(--color-border)] px-4">
 				<svg

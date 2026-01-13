@@ -1,10 +1,12 @@
 <script lang="ts">
+	import { siteConfig } from '$lib/config';
+
 	interface Props {
 		title?: string;
 		description?: string;
 	}
 
-	let { title = 'Portfolio', description = 'A technical minimalist portfolio.' }: Props = $props();
+	let { title = siteConfig.title, description = siteConfig.description }: Props = $props();
 </script>
 
 <svelte:head>
