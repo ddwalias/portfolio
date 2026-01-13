@@ -1,14 +1,18 @@
 <script>
 	import { onMount } from 'svelte';
+	import { enhanceCodeBlocks } from '$lib/actions/enhance-code-blocks.js';
 
 	let { data } = $props();
-	const { title, date } = data.meta;
+	let { title, date } = $derived(data.meta);
 
-	const formattedDate = new Date(date).toLocaleDateString('en-US', {
-		year: 'numeric',
-		month: 'long',
-		day: 'numeric'
-	});
+	// Derived state for formatting date
+	let formattedDate = $derived(
+		new Date(date).toLocaleDateString('en-US', {
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric'
+		})
+	);
 
 	let headings = $state([]);
 	let activeId = $state('');
@@ -56,7 +60,7 @@
 	</header>
 
 	<div class="grid grid-cols-1 gap-12 lg:grid-cols-[1fr_240px]">
-		<div class="prose prose-lg prose-invert min-w-0">
+		<div class="prose prose-lg min-w-0 prose-invert" use:enhanceCodeBlocks>
 			<svelte:component this={data.content} />
 		</div>
 
@@ -73,7 +77,7 @@
 						<li>
 							<a
 								href="#{heading.id}"
-								class="block border-l-2 -ml-[1px] px-4 py-1 text-sm transition-all duration-200
+								class="-ml-[1px] block border-l-2 px-4 py-1 text-sm transition-all duration-200
                                 {activeId === heading.id
 									? 'border-[var(--color-primary)] text-[var(--color-primary)]'
 									: 'border-transparent text-[var(--color-muted)] hover:text-white'}"

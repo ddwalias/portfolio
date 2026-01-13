@@ -4,6 +4,8 @@
 	import favicon from '$lib/assets/favicon.svg';
 	import Header from '$lib/components/Header.svelte';
 	import Footer from '$lib/components/Footer.svelte';
+	import SEO from '$lib/components/SEO.svelte';
+	import CommandPalette from '$lib/components/CommandPalette.svelte';
 
 	let { children } = $props();
 
@@ -38,6 +40,9 @@
 		rel="stylesheet"
 	/>
 </svelte:head>
+
+<SEO />
+<CommandPalette />
 
 <div
 	class="relative flex min-h-screen flex-col bg-[var(--color-background)] font-sans text-[var(--color-foreground)] selection:bg-white/20"
