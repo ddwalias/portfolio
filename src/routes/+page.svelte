@@ -6,7 +6,7 @@
 </script>
 
 <div
-	class="animate-in fade-in slide-in-from-bottom-4 mb-20 grid grid-cols-1 gap-6 duration-700 md:grid-cols-3"
+	class="animate-in fade-in slide-in-from-bottom-4 mb-20 grid auto-rows-[minmax(180px,auto)] grid-cols-1 gap-6 duration-700 md:grid-cols-3"
 >
 	<!-- Bio - Large -->
 	<BentoItem span="md:col-span-2" title="About">

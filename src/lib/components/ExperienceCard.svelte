@@ -23,7 +23,7 @@
 	></div>
 
 	<div
-		class="flex flex-col gap-4 border border-[var(--color-border)] bg-black/20 p-6 backdrop-blur-sm transition-all duration-300 hover:border-[var(--color-primary)] hover:bg-white/[0.02] hover:shadow-[0_0_15px_var(--color-primary-glow)]"
+		class="spotlight-border flex flex-col gap-4 rounded-xl border border-[var(--color-border)] bg-black/20 p-6 backdrop-blur-sm transition-all duration-300 hover:shadow-[0_0_15px_var(--color-primary-glow)]"
 	>
 		<div class="flex flex-col justify-between gap-1 sm:flex-row sm:items-baseline">
 			<h3 class="text-lg font-bold tracking-tight text-white">

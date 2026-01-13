@@ -13,7 +13,7 @@
 
 <a href={`/blog/${slug}`} class="group mb-6 block">
 	<article
-		class="spotlight-border rounded-xl border border-[var(--color-border)] p-5 transition-all duration-300 hover:bg-white/[0.02] hover:shadow-[0_0_15px_var(--color-primary-glow)]"
+		class="spotlight-border rounded-xl border border-[var(--color-border)] bg-black/20 p-5 backdrop-blur-sm transition-all duration-300 hover:shadow-[0_0_15px_var(--color-primary-glow)]"
 	>
 		<div class="mb-3 flex items-center justify-between">
 			<time datetime={date} class="font-mono text-xs text-[var(--color-muted)]">
