@@ -1,5 +1,16 @@
-<script>
-	let { role, company, date, active = false, skills = [], children } = $props();
+<script lang="ts">
+	import type { Snippet } from 'svelte';
+
+	interface Props {
+		role: string;
+		company: string;
+		date: string;
+		active?: boolean;
+		skills?: string[];
+		children: Snippet;
+	}
+
+	let { role, company, date, active = false, skills = [], children }: Props = $props();
 </script>
 
 <div class="group relative py-6 pl-8 first:pt-0 last:pb-0 sm:pl-32">

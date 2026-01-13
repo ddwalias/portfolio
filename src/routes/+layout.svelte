@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { onNavigate } from '$app/navigation';
+	import type { Navigation } from '@sveltejs/kit';
+	import type { Snippet } from 'svelte';
 	import './layout.css';
 	import favicon from '$lib/assets/favicon.svg';
 	import Header from '$lib/components/Header.svelte';
@@ -7,12 +9,16 @@
 	import SEO from '$lib/components/SEO.svelte';
 	import CommandPalette from '$lib/components/CommandPalette.svelte';
 
-	let { children } = $props();
+	interface Props {
+		children: Snippet;
+	}
+
+	let { children }: Props = $props();
 
 	let mouseX = $state(0);
 	let mouseY = $state(0);
 
-	onNavigate((navigation) => {
+	onNavigate((navigation: Navigation) => {
 		if (!document.startViewTransition) return;
 
 		return new Promise((resolve) => {

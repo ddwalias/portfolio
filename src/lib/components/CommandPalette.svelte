@@ -1,11 +1,16 @@
-<script>
+<script lang="ts">
 	import { goto } from '$app/navigation';
+
+	interface Link {
+		label: string;
+		href: string;
+	}
 
 	let open = $state(false);
 	let query = $state('');
 	let selectedIndex = $state(0);
 
-	const links = [
+	const links: Link[] = [
 		{ label: 'Home', href: '/' },
 		{ label: 'Work', href: '/work' },
 		{ label: 'Blog', href: '/blog' },
@@ -17,7 +22,7 @@
 		links.filter((l) => l.label.toLowerCase().includes(query.toLowerCase()))
 	);
 
-	function handleKeydown(e) {
+	function handleKeydown(e: KeyboardEvent) {
 		if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
 			e.preventDefault();
 			open = !open;

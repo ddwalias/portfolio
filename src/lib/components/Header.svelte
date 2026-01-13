@@ -1,15 +1,20 @@
-<script>
+<script lang="ts">
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 
-	let navItems = [
+	interface NavItem {
+		label: string;
+		href: string;
+	}
+
+	let navItems: NavItem[] = [
 		{ label: 'Home', href: '/' },
 		{ label: 'Work', href: '/work' },
 		{ label: 'Blog', href: '/blog' },
 		{ label: 'About', href: '/about' }
 	];
 
-	let showHeader = true;
+	let showHeader = $state(true);
 	let lastScrollY = 0;
 
 	onMount(() => {
@@ -33,7 +38,7 @@
 	});
 
 	// Helper to check if link is active
-	function isActive(href) {
+	function isActive(href: string): boolean {
 		if (href === '/') return $page.url.pathname === '/';
 		return $page.url.pathname.startsWith(href);
 	}

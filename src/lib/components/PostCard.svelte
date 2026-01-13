@@ -1,5 +1,12 @@
-<script>
-	let { title, date, excerpt, slug } = $props();
+<script lang="ts">
+	interface Props {
+		title: string;
+		date: string;
+		excerpt: string;
+		slug: string;
+	}
+
+	let { title, date, excerpt, slug }: Props = $props();
 
 	// Format date nicely
 	let formattedDate = $derived(

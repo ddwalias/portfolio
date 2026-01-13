@@ -1,5 +1,10 @@
-<script>
-	let { title = 'Portfolio', description = 'A technical minimalist portfolio.' } = $props();
+<script lang="ts">
+	interface Props {
+		title?: string;
+		description?: string;
+	}
+
+	let { title = 'Portfolio', description = 'A technical minimalist portfolio.' }: Props = $props();
 </script>
 
 <svelte:head>

@@ -1,5 +1,9 @@
-<script>
-	let { text } = $props();
+<script lang="ts">
+	interface Props {
+		text: string;
+	}
+
+	let { text }: Props = $props();
 	let copied = $state(false);
 
 	function copy() {

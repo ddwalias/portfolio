@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import ExperienceCard from '$lib/components/ExperienceCard.svelte';
 </script>
 

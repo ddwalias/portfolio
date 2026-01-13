@@ -1,5 +1,14 @@
-<script>
-	let { title, class: className = '', children, span = 'col-span-1' } = $props();
+<script lang="ts">
+	import type { Snippet } from 'svelte';
+
+	interface Props {
+		title?: string;
+		span?: string;
+		className?: string;
+		children: Snippet;
+	}
+
+	let { title, span = '', className = '', children }: Props = $props();
 </script>
 
 <div

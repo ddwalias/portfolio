@@ -1,11 +1,17 @@
-<script>
-	let { children } = $props();
+<script lang="ts">
+	import type { Snippet } from 'svelte';
+
+	interface Props {
+		children: Snippet;
+	}
+
+	let { children }: Props = $props();
 	let copied = $state(false);
-	let preElement;
+	let preElement: HTMLDivElement;
 
 	function copyCode() {
 		if (!preElement) return;
-		const code = preElement.textContent;
+		const code = preElement.textContent || '';
 		navigator.clipboard.writeText(code);
 		copied = true;
 		setTimeout(() => (copied = false), 2000);

@@ -1,7 +1,8 @@
-<script>
+<script lang="ts">
 	import PostCard from '$lib/components/PostCard.svelte';
+	import type { PageData } from './$types';
 
-	let { data } = $props();
+	let { data }: { data: PageData } = $props();
 </script>
 
 <h1 class="mb-12 text-4xl font-bold tracking-tight">Blog</h1>

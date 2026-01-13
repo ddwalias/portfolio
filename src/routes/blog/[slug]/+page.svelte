@@ -1,8 +1,15 @@
-<script>
+<script lang="ts">
 	import { onMount } from 'svelte';
-	import { enhanceCodeBlocks } from '$lib/actions/enhance-code-blocks.js';
+	import { enhanceCodeBlocks } from '$lib/actions/enhance-code-blocks';
+	import type { PageData } from './$types';
 
-	let { data } = $props();
+	interface Heading {
+		id: string;
+		text: string;
+		level: number;
+	}
+
+	let { data }: { data: PageData } = $props();
 	let { title, date } = $derived(data.meta);
 
 	// Derived state for formatting date
@@ -14,16 +21,19 @@
 		})
 	);
 
-	let headings = $state([]);
+	let headings = $state<Heading[]>([]);
 	let activeId = $state('');
 
 	onMount(() => {
 		const elements = document.querySelectorAll('.prose h2, .prose h3');
-		headings = Array.from(elements).map((el) => ({
-			id: el.id,
-			text: el.innerText,
-			level: el.tagName === 'H2' ? 2 : 3
-		}));
+		headings = Array.from(elements).map((el) => {
+			const element = el as HTMLElement;
+			return {
+				id: element.id,
+				text: element.innerText,
+				level: element.tagName === 'H2' ? 2 : 3
+			};
+		});
 
 		const observer = new IntersectionObserver(
 			(entries) => {
@@ -61,7 +71,7 @@
 
 	<div class="grid grid-cols-1 gap-12 lg:grid-cols-[1fr_240px]">
 		<div class="prose prose-lg min-w-0 prose-invert" use:enhanceCodeBlocks>
-			<svelte:component this={data.content} />
+			<Content />
 		</div>
 
 		<!-- Table of Contents Sidebar -->

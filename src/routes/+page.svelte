@@ -1,8 +1,9 @@
-<script>
+<script lang="ts">
 	import PostCard from '$lib/components/PostCard.svelte';
 	import BentoItem from '$lib/components/BentoItem.svelte';
+	import type { PageData } from './$types';
 
-	let { data } = $props();
+	let { data }: { data: PageData } = $props();
 </script>
 
 <div
