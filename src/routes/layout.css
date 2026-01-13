@@ -1,0 +1,38 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+@import 'prism-themes/themes/prism-one-dark.css';
+
+@theme {
+  --color-background: #0a0a0a;
+  --color-foreground: #ededed;
+  --color-muted: #a1a1aa;
+  --color-border: #27272a;
+  
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  --pattern-grid: linear-gradient(to right, #202020 1px, transparent 1px),
+                  linear-gradient(to bottom, #202020 1px, transparent 1px);
+}
+
+@layer base {
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    letter-spacing: -0.025em;
+    font-weight: 600;
+  }
+}
+
+/* Custom Utilities */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
