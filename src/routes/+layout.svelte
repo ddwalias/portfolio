@@ -53,7 +53,7 @@
 		"
 	></div>
 
-	<main class="relative z-10 mx-auto w-full max-w-5xl flex-1 px-6 py-12">
+	<main class="relative z-10 mx-auto w-full max-w-5xl flex-1 px-6 pt-28 pb-12">
 		<Header />
 		{@render children()}
 		<Footer />
