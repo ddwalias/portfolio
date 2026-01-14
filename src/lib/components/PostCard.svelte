@@ -26,6 +26,7 @@
 			<time datetime={date} class="font-mono text-xs text-[var(--color-muted)]">
 				{formattedDate}
 			</time>
+
 			<span
 				class="font-mono text-xs text-[var(--color-primary)] opacity-0 transition-opacity group-hover:opacity-100"
 			>

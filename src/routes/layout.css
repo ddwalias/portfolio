@@ -27,12 +27,39 @@
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
     line-height: 1.6;
   }
 
   h1, h2, h3, h4, h5, h6 {
     letter-spacing: -0.025em;
     font-weight: 600;
+  }
+
+  /* Custom Selection */
+  ::selection {
+    background-color: var(--color-primary);
+    color: black;
+  }
+
+  /* Themed Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 3px;
+    transition: background-color 0.2s;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-primary);
   }
 }
 

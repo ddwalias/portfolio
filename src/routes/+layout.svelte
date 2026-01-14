@@ -2,6 +2,10 @@
 	import { onNavigate } from '$app/navigation';
 	import type { Navigation } from '@sveltejs/kit';
 	import type { Snippet } from 'svelte';
+	import { onMount } from 'svelte';
+	import Lenis from 'lenis';
+	import 'lenis/dist/lenis.css';
+
 	import './layout.css';
 	import favicon from '$lib/assets/favicon.svg';
 	import Header from '$lib/components/Header.svelte';
@@ -17,6 +21,21 @@
 
 	let mouseX = $state(0);
 	let mouseY = $state(0);
+
+	onMount(() => {
+		const lenis = new Lenis();
+
+		function raf(time: number) {
+			lenis.raf(time);
+			requestAnimationFrame(raf);
+		}
+
+		requestAnimationFrame(raf);
+
+		return () => {
+			lenis.destroy();
+		};
+	});
 
 	onNavigate((navigation: Navigation) => {
 		if (!document.startViewTransition) return;

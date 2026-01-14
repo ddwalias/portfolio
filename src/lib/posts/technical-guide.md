@@ -1,6 +1,7 @@
 ---
 title: Building Robust APIs with SvelteKit
 date: 2023-11-20
+tags: ['SvelteKit', 'TypeScript', 'API']
 excerpt: A deep dive into server-side logic, type safety, and handling complex data structures in your next web application.
 ---
 

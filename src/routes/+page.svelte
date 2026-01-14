@@ -33,11 +33,15 @@
 			<div class="mt-4 flex items-center gap-2">
 				<span class="relative flex h-2.5 w-2.5">
 					<span
-						class="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"
+						class="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75 duration-1000"
 					></span>
-					<span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-500"></span>
+					<span
+						class="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]"
+					></span>
 				</span>
-				<span class="font-mono text-xs text-green-500">Available for projects</span>
+				<span class="font-mono text-xs font-bold tracking-wider text-green-500 uppercase"
+					>Available for projects</span
+				>
 			</div>
 		</div>
 	</BentoItem>
