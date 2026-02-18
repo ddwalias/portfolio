@@ -68,6 +68,30 @@
 		</h1>
 	</header>
 
+	<!-- Mobile TOC (top, collapsible) -->
+	{#if headings.length > 0}
+		<details class="mt-0 mb-8 lg:hidden">
+			<summary
+				class="cursor-pointer font-mono text-xs tracking-wider text-[var(--color-muted)] uppercase"
+			>
+				On this page
+			</summary>
+			<ul class="mt-3 space-y-1 border-l border-[var(--color-border)] pl-3">
+				{#each headings as heading}
+					<li>
+						<a
+							href="#{heading.id}"
+							class="block py-0.5 text-xs text-[var(--color-muted)] hover:text-[var(--color-foreground)]"
+							style="padding-left: {heading.level === 3 ? '0.75rem' : '0'}"
+						>
+							{heading.text}
+						</a>
+					</li>
+				{/each}
+			</ul>
+		</details>
+	{/if}
+
 	<div class="relative lg:grid lg:grid-cols-[1fr_200px] lg:gap-12">
 		<!-- Article -->
 		<div class="prose min-w-0 prose-invert" use:enhanceCodeBlocks>
@@ -103,30 +127,6 @@
 			</aside>
 		{/if}
 	</div>
-
-	<!-- Mobile TOC (top, collapsible) -->
-	{#if headings.length > 0}
-		<details class="mt-0 mb-8 border-b border-[var(--color-border)] pb-4 lg:hidden">
-			<summary
-				class="cursor-pointer font-mono text-xs tracking-wider text-[var(--color-muted)] uppercase"
-			>
-				On this page
-			</summary>
-			<ul class="mt-3 space-y-1 border-l border-[var(--color-border)] pl-3">
-				{#each headings as heading}
-					<li>
-						<a
-							href="#{heading.id}"
-							class="block py-0.5 text-xs text-[var(--color-muted)] hover:text-[var(--color-foreground)]"
-							style="padding-left: {heading.level === 3 ? '0.75rem' : '0'}"
-						>
-							{heading.text}
-						</a>
-					</li>
-				{/each}
-			</ul>
-		</details>
-	{/if}
 </div>
 
 <div class="mx-auto max-w-5xl px-6">

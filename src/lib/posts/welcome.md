@@ -1,7 +1,7 @@
 ---
 title: I rebuilt my portfolio
 date: 2026-02-15
-excerpt: Every developer rebuilds their portfolio too many times. Here's what I was actually trying to fix this time around.
+excerpt: Every developer rebuilds their portfolio once in a while. Here's what I was actually trying to fix this time around.
 ---
 
 # I rebuilt my portfolio
