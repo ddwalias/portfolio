@@ -11,7 +11,7 @@ interface MarkdownFile {
 
 export const load: PageServerLoad = async () => {
     const paths = import.meta.glob<MarkdownFile>('/src/lib/posts/*.md', { eager: true });
-
+    console.log(paths);
     const posts = Object.entries(paths).map(([path, file]) => {
         const slug = path.split('/').pop()?.replace('.md', '') ?? '';
         return {
@@ -19,6 +19,8 @@ export const load: PageServerLoad = async () => {
             slug
         };
     });
+
+    console.log(posts);
 
     // Sort by date desc
     posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());

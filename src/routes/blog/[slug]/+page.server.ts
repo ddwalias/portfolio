@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { error } from '@sveltejs/kit';
-import type { PageServerLoad } from './$types';
+import type { PageServerLoad, EntryGenerator } from './$types';
 
 export const load: PageServerLoad = async ({ params }) => {
     const filePath = `src/lib/posts/${params.slug}.md`;
@@ -9,11 +9,17 @@ export const load: PageServerLoad = async ({ params }) => {
         throw error(404, 'Post not found');
     }
 
-    const content = fs.readFileSync(filePath, 'utf-8');
-    const words = content.split(/\s+/g).length;
-    const minutes = Math.ceil(words / 200);
+    // Optional: Calculate reading time here if desired in the future, 
+    // but for now we just verify existence as per user state.
 
-    return {
-        readingTime: `${minutes} min read`
-    };
+    return {};
+};
+
+export const entries: EntryGenerator = () => {
+    const paths = import.meta.glob('/src/lib/posts/*.md');
+
+    return Object.keys(paths).map((path) => {
+        const slug = path.split('/').pop()?.replace('.md', '') ?? '';
+        return { slug };
+    });
 };

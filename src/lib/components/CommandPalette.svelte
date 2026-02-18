@@ -1,130 +1,121 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { onMount } from 'svelte';
 	import { navLinks } from '$lib/config';
 
-	let open = $state(false);
-	let query = $state('');
+	let isOpen = $state(false);
+	let search = $state('');
 	let selectedIndex = $state(0);
 
-	let filteredLinks = $derived(
-		navLinks.filter((l) => l.label.toLowerCase().includes(query.toLowerCase()))
+	let filtered = $derived(
+		navLinks.filter((item) => item.label.toLowerCase().includes(search.toLowerCase()))
 	);
 
-	function handleKeydown(e: KeyboardEvent) {
-		if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-			e.preventDefault();
-			open = !open;
-		}
-
-		if (!open) return;
-
-		if (e.key === 'Escape') {
-			open = false;
-		} else if (e.key === 'ArrowDown') {
-			e.preventDefault();
-			selectedIndex = (selectedIndex + 1) % filteredLinks.length;
-		} else if (e.key === 'ArrowUp') {
-			e.preventDefault();
-			selectedIndex = (selectedIndex - 1 + filteredLinks.length) % filteredLinks.length;
-		} else if (e.key === 'Enter') {
-			e.preventDefault();
-			const link = filteredLinks[selectedIndex];
-			if (link) {
-				goto(link.href);
-				open = false;
-			}
+	function toggle() {
+		isOpen = !isOpen;
+		if (isOpen) {
+			search = '';
+			selectedIndex = 0;
 		}
 	}
 
-	$effect(() => {
-		if (!open) {
-			query = '';
-			selectedIndex = 0;
+	function navigate(href: string) {
+		isOpen = false;
+		goto(href);
+	}
+
+	function handleKeydown(e: KeyboardEvent) {
+		if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
+			e.preventDefault();
+			toggle();
 		}
+		if (!isOpen) return;
+		if (e.key === 'Escape') {
+			isOpen = false;
+		}
+		if (e.key === 'ArrowDown') {
+			e.preventDefault();
+			selectedIndex = (selectedIndex + 1) % filtered.length;
+		}
+		if (e.key === 'ArrowUp') {
+			e.preventDefault();
+			selectedIndex = (selectedIndex - 1 + filtered.length) % filtered.length;
+		}
+		if (e.key === 'Enter' && filtered[selectedIndex]) {
+			navigate(filtered[selectedIndex].href);
+		}
+	}
+
+	function autofocus(node: HTMLElement) {
+		node.focus();
+	}
+
+	onMount(() => {
+		window.addEventListener('keydown', handleKeydown);
+		return () => window.removeEventListener('keydown', handleKeydown);
 	});
 </script>
 
-<svelte:window onkeydown={handleKeydown} />
+{#if isOpen}
+	<!-- Backdrop -->
+	<button
+		class="fixed inset-0 z-[100] h-full w-full cursor-default border-none bg-black/60 backdrop-blur-sm outline-none"
+		onclick={() => (isOpen = false)}
+		aria-label="Close command palette"
+		tabindex="-1"
+	></button>
 
-{#if open}
+	<!-- Palette -->
 	<div
-		role="button"
-		tabindex="0"
-		class="fixed inset-0 z-[100] flex items-start justify-center bg-black/60 pt-[20vh] backdrop-blur-sm transition-all"
-		onclick={() => (open = false)}
-		onkeydown={(e) => {
-			if (e.key === 'Enter' || e.key === ' ') {
-				open = false;
-			}
-		}}
+		class="fixed top-1/4 left-1/2 z-[101] w-full max-w-md -translate-x-1/2 overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-2xl shadow-black/40"
 	>
-		<div
-			class="animate-in fade-in zoom-in-95 relative w-full max-w-lg overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-background)] shadow-2xl duration-200"
-			onclick={(e) => e.stopPropagation()}
-			onkeydown={(e) => e.stopPropagation()}
-			role="dialog"
-			aria-modal="true"
-			tabindex="-1"
-		>
-			<div class="flex items-center border-b border-[var(--color-border)] px-4">
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="18"
-					height="18"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					class="mr-3 text-[var(--color-muted)]"
-				>
-					<circle cx="11" cy="11" r="8"></circle>
-					<line x1="21" x2="16.65" y1="21" y2="16.65"></line>
-				</svg>
-				<input
-					bind:value={query}
-					class="flex-1 bg-transparent py-4 text-sm placeholder-[var(--color-muted)] focus:outline-none"
-					placeholder="Type a command or search..."
-					autofocus
-				/>
-				<kbd
-					class="hidden rounded border border-[var(--color-border)] bg-[#1e1e1e] px-1.5 py-0.5 font-mono text-[10px] text-[var(--color-muted)] sm:inline-block"
-				>
-					ESC
-				</kbd>
-			</div>
-
-			<div class="max-h-[60vh] overflow-y-auto p-2">
-				{#if filteredLinks.length === 0}
-					<div class="py-10 text-center text-sm text-[var(--color-muted)]">No results found.</div>
-				{:else}
-					{#each filteredLinks as link, i}
-						<button
-							class="flex w-full items-center justify-between rounded-lg px-4 py-3 text-left text-sm transition-colors
-                            {i === selectedIndex
-								? 'bg-[var(--color-primary)] text-white'
-								: 'text-[var(--color-foreground)] hover:bg-[#1e1e1e]'}"
-							onclick={() => {
-								goto(link.href);
-								open = false;
-							}}
-							onmouseenter={() => (selectedIndex = i)}
-						>
-							<span>{link.label}</span>
-							{#if i === selectedIndex}
-								<span class="text-xs opacity-70">Jump to</span>
-							{/if}
-						</button>
-					{/each}
-				{/if}
-			</div>
-
-			<div class="border-t border-[var(--color-border)] bg-[#1e1e1e]/50 px-4 py-2">
-				<div class="flex gap-2 text-[10px] text-[var(--color-muted)]">
-					<span>Navigation</span>
-				</div>
-			</div>
+		<div class="flex items-center gap-3 border-b border-[var(--color-border)] px-4 py-3">
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				width="16"
+				height="16"
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				class="text-[var(--color-muted)]"
+			>
+				<circle cx="11" cy="11" r="8" />
+				<path d="m21 21-4.3-4.3" />
+			</svg>
+			<input
+				use:autofocus
+				bind:value={search}
+				type="text"
+				placeholder="Where to?"
+				class="flex-1 bg-transparent text-sm text-[var(--color-foreground)] outline-none placeholder:text-[var(--color-muted)]"
+			/>
+			<kbd
+				class="rounded border border-[var(--color-border)] px-1.5 py-0.5 font-mono text-[10px] text-[var(--color-muted)]"
+				>esc</kbd
+			>
 		</div>
+
+		<ul class="max-h-64 overflow-y-auto p-2">
+			{#each filtered as item, i}
+				<li>
+					<button
+						onclick={() => navigate(item.href)}
+						class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm transition-colors
+						{i === selectedIndex
+							? 'bg-[var(--color-primary)]/10 text-[var(--color-primary)]'
+							: 'text-[var(--color-muted)] hover:bg-[var(--color-surface)] hover:text-[var(--color-foreground)]'}"
+					>
+						<span class="font-mono text-[10px] tracking-wider uppercase opacity-50"> / </span>
+						{item.label}
+					</button>
+				</li>
+			{/each}
+			{#if filtered.length === 0}
+				<li class="px-3 py-6 text-center text-sm text-[var(--color-muted)]">Nothing here.</li>
+			{/if}
+		</ul>
 	</div>
 {/if}

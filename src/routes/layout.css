@@ -3,22 +3,18 @@
 @import 'prism-themes/themes/prism-one-dark.css';
 
 @theme {
-  --color-background: #0a0a0a;
-  --color-foreground: #ededed;
-  --color-muted: #a1a1aa;
-  --color-border: #27272a;
-  
-  --color-primary: #06b6d4; /* Cyan 500 */
-  --color-primary-glow: rgba(6, 182, 212, 0.15);
+  --color-background: #0a0a09;
+  --color-foreground: #e8e6df;
+  --color-muted: #8a8878;
+  --color-border: #1e1d1b;
+  --color-surface: #131210;
+
+  --color-primary: #e5a44f;
+  --color-primary-glow: rgba(229, 164, 79, 0.08);
 
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
-  
-  --pattern-grid: linear-gradient(to right, #404040 1px, transparent 1px),
-                  linear-gradient(to bottom, #404040 1px, transparent 1px);
-  --pattern-dots: radial-gradient(#404040 1.5px, transparent 1.5px);
-  --pattern-noise: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.15'/%3E%3C/svg%3E");
-  --pattern-lines: linear-gradient(to bottom, #404040 1px, transparent 1px);
+  --font-serif: 'Playfair Display', Georgia, serif;
 }
 
 @layer base {
@@ -28,136 +24,134 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    line-height: 1.6;
+    line-height: 1.7;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    letter-spacing: -0.025em;
-    font-weight: 600;
-  }
-
-  /* Custom Selection */
   ::selection {
     background-color: var(--color-primary);
-    color: black;
+    color: var(--color-background);
   }
 
-  /* Themed Scrollbar */
   ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: var(--color-border);
-    border-radius: 3px;
-    transition: background-color 0.2s;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-primary);
+    width: 0px;
   }
 }
 
-/* Custom Utilities */
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
 
-  .scrollbar-hide {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-  }
-  
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none; /* Chrome, Safari and Opera */
+  /* Index item hover animation */
+  .index-item {
+    position: relative;
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    padding: 0.75rem 0;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    color: var(--color-foreground);
   }
 
-  /* Typography Overrides */
+  .index-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--color-primary);
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .index-item:hover {
+    color: var(--color-foreground);
+    transform: translateX(12px);
+  }
+
+  .index-item:hover::after {
+    width: 100%;
+  }
+
+  .index-item:hover .index-number {
+    color: var(--color-primary);
+  }
+
+  .index-number {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    transition: color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    color: var(--color-border);
+  }
+
+  .index-label {
+    font-size: 1.25rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+  }
+
+  /* Section entrance */
+  .section-enter {
+    animation: sectionFadeIn 0.6s ease-out both;
+  }
+
+  @keyframes sectionFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .handwritten {
+    font-style: italic;
+    opacity: 0.6;
+    font-size: 0.85em;
+  }
+
+  /* Prose */
   .prose {
-    max-width: 65ch;
+    max-width: 60ch;
     --tw-prose-body: var(--color-foreground);
-    --tw-prose-headings: white;
+    --tw-prose-headings: var(--color-foreground);
     --tw-prose-links: var(--color-primary);
-    --tw-prose-bold: white;
+    --tw-prose-bold: var(--color-foreground);
     --tw-prose-counters: var(--color-primary);
-    --tw-prose-bullets: var(--color-border);
+    --tw-prose-bullets: var(--color-muted);
     --tw-prose-hr: var(--color-border);
     --tw-prose-quotes: var(--color-muted);
     --tw-prose-quote-borders: var(--color-primary);
     --tw-prose-captions: var(--color-muted);
     --tw-prose-code: var(--color-primary);
     --tw-prose-pre-code: var(--color-foreground);
-    --tw-prose-pre-bg: rgba(0, 0, 0, 0.5);
+    --tw-prose-pre-bg: var(--color-surface);
     --tw-prose-th-borders: var(--color-border);
     --tw-prose-td-borders: var(--color-border);
   }
-
   .prose a {
     text-decoration: none;
     transition: color 0.2s;
   }
-  
   .prose a:hover {
-    color: white;
+    color: var(--color-foreground);
     text-decoration: underline;
     text-decoration-color: var(--color-primary);
   }
-
-  .prose h1, .prose h2, .prose h3, .prose h4 {
-    font-weight: 700;
+  .prose h1, .prose h2, .prose h3 {
+    font-weight: 600;
     letter-spacing: -0.025em;
-    margin-top: 2em;
+    margin-top: 2.5em;
     margin-bottom: 0.75em;
   }
-
-  .prose blockquote {
-    font-style: italic;
-    border-left-width: 2px;
-  }
-  
   .prose code {
     font-family: var(--font-mono);
-    font-weight: 500;
   }
-
   .prose pre {
     border: 1px solid var(--color-border);
     border-radius: 0;
-  }
-
-  .spotlight-border {
-    position: relative;
-    isolation: isolate;
-  }
-
-  .spotlight-border::before {
-    content: "";
-    position: absolute;
-    inset: -2px; /* Cover the parent border */
-    padding: 2px; /* Increase width to fix rounded corner visual artifacts */
-    border-radius: inherit;
-    background: radial-gradient(
-      400px circle at var(--mouse-x) var(--mouse-y),
-      var(--color-primary),
-      transparent 40%
-    );
-    background-attachment: fixed;
-    -webkit-mask: 
-      linear-gradient(#fff 0 0) content-box, 
-      linear-gradient(#fff 0 0);
-    mask: 
-      linear-gradient(#fff 0 0) content-box, 
-      linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
-    z-index: 10; /* Ensure it sits above the background and static border */
-    opacity: 1; /* Make it bright */
   }
 }

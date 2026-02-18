@@ -1,5 +1,7 @@
 import { siteConfig } from '$lib/config';
 
+export const prerender = true;
+
 export async function GET() {
     // Hardcoded for now, ideal would be to import posts
     const posts = [

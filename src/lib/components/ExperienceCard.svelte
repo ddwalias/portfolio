@@ -1,69 +1,41 @@
 <script lang="ts">
-	import type { Snippet } from 'svelte';
-
 	interface Props {
 		role: string;
 		company: string;
 		date: string;
 		active?: boolean;
 		skills?: string[];
-		children: Snippet;
+		children: import('svelte').Snippet;
 	}
 
 	let { role, company, date, active = false, skills = [], children }: Props = $props();
 </script>
 
-<div class="group relative py-6 pl-8 first:pt-0 last:pb-0 sm:pl-32">
-	<!-- Timeline Line -->
-	<div
-		class="absolute top-0 bottom-0 left-2 w-px bg-[var(--color-border)] group-last:bottom-auto group-last:h-6 sm:left-0"
-	></div>
-
-	<!-- Date (Left side on desktop) -->
-	<time
-		class="absolute top-8 left-0 hidden w-24 text-right font-mono text-xs text-[var(--color-muted)] sm:block"
-	>
-		{date}
-	</time>
-
-	<!-- Dot -->
-	<div
-		class="absolute top-8 left-[5px] h-1.5 w-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-background)] transition-colors group-hover:border-[var(--color-primary)] group-hover:bg-[var(--color-primary)] sm:left-[-3px] {active
-			? 'border-[var(--color-primary)] bg-[var(--color-primary)] shadow-[0_0_8px_var(--color-primary)]'
-			: ''}"
-	></div>
-
-	<div
-		class="spotlight-border flex flex-col gap-4 rounded-xl border-2 border-[var(--color-border)] bg-black/20 p-6 backdrop-blur-sm transition-all duration-300 hover:shadow-[0_0_15px_var(--color-primary-glow)]"
-	>
-		<div class="flex flex-col justify-between gap-1 sm:flex-row sm:items-baseline">
-			<h3 class="text-lg font-bold tracking-tight text-white">
+<div class="group relative py-6 transition-colors hover:text-[var(--color-foreground)]">
+	<div class="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-6">
+		<span class="shrink-0 font-mono text-xs text-[var(--color-muted)] sm:w-28">{date}</span>
+		<div class="min-w-0 flex-1">
+			<h3 class="text-base font-medium">
 				{role}
+				<span class="font-normal text-[var(--color-muted)]">· {company}</span>
+				{#if active}
+					<span class="ml-2 inline-flex h-1.5 w-1.5 rounded-full bg-[var(--color-primary)]"></span>
+				{/if}
 			</h3>
-			<span class="font-mono text-sm text-[var(--color-muted)]">
-				{company}
-			</span>
-		</div>
-
-		<!-- Date (Mobile only) -->
-		<time class="mb-2 block font-mono text-xs text-[var(--color-muted)] sm:hidden">
-			{date}
-		</time>
-
-		<div class="max-w-prose text-sm leading-relaxed text-[var(--color-muted)]">
-			{@render children()}
-		</div>
-
-		{#if skills.length > 0}
-			<div class="mt-2 flex flex-wrap gap-2">
-				{#each skills as skill}
-					<span
-						class="rounded border border-[var(--color-border)] px-1.5 py-0.5 font-mono text-[10px] text-[var(--color-muted)]"
-					>
-						{skill}
-					</span>
-				{/each}
+			<div class="mt-2 text-sm leading-relaxed text-[var(--color-muted)]">
+				{@render children()}
 			</div>
-		{/if}
+			{#if skills.length > 0}
+				<div class="mt-3 flex flex-wrap gap-1.5">
+					{#each skills as skill}
+						<span
+							class="font-mono text-[10px] text-[var(--color-muted)] before:mr-1 before:content-['·']"
+						>
+							{skill}
+						</span>
+					{/each}
+				</div>
+			{/if}
+		</div>
 	</div>
 </div>

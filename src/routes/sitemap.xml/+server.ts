@@ -1,5 +1,7 @@
 import { siteConfig, navLinks } from '$lib/config';
 
+export const prerender = true;
+
 export async function GET() {
     const pages = navLinks.map((link) => link.href);
 

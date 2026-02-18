@@ -1,104 +1,97 @@
 <script lang="ts">
-	import PostCard from '$lib/components/PostCard.svelte';
-	import BentoItem from '$lib/components/BentoItem.svelte';
+	import { siteConfig } from '$lib/config';
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
+
+	let latestPost = $derived(data.posts[0]);
+	let latestDate = $derived(
+		latestPost
+			? new Date(latestPost.date).toLocaleDateString('en-US', {
+					year: 'numeric',
+					month: 'short'
+				})
+			: ''
+	);
 </script>
 
-<div
-	class="animate-in fade-in slide-in-from-bottom-4 mb-20 grid auto-rows-[minmax(180px,auto)] grid-cols-1 gap-6 duration-700 md:grid-cols-3"
->
-	<!-- Bio - Large -->
-	<BentoItem span="md:col-span-2" title="About">
-		<div class="flex h-full flex-col justify-center">
-			<h1 class="mb-4 text-3xl leading-tight font-bold tracking-tight text-balance">
-				<span class="text-[var(--color-primary)]">Engineering precision.</span><br />
-				<span class="text-[var(--color-muted)]">Design clarity.</span>
-			</h1>
-			<p class="max-w-prose text-base leading-relaxed font-light text-[var(--color-muted)]">
-				I build clean, performant web interfaces and write about the process. Focused on simplicity,
-				robust architecture, and user experience.
-			</p>
-		</div>
-	</BentoItem>
-
-	<!-- Role / Status -->
-	<BentoItem title="Current Focus">
-		<div class="flex h-full min-h-[140px] flex-col justify-between">
-			<div>
-				<div class="text-2xl font-bold">Senior Engineer</div>
-				<div class="text-sm text-[var(--color-muted)]">@TechCorp</div>
-			</div>
-			<div class="mt-4 flex items-center gap-2">
-				<span class="relative flex h-2.5 w-2.5">
-					<span
-						class="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75 duration-1000"
-					></span>
-					<span
-						class="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]"
-					></span>
-				</span>
-				<span class="font-mono text-xs font-bold tracking-wider text-green-500 uppercase"
-					>Available for projects</span
-				>
-			</div>
-		</div>
-	</BentoItem>
-
-	<!-- Tech Stack -->
-	<BentoItem title="Toolkit">
-		<div class="flex flex-wrap content-start gap-2">
-			{#each ['Svelte', 'TypeScript', 'Tailwind', 'Rust', 'Node.js'] as tech}
-				<span
-					class="rounded border border-[var(--color-border)] bg-white/5 px-2 py-1 font-mono text-xs text-[var(--color-foreground)] transition-colors hover:border-white/20"
-				>
-					{tech}
-				</span>
-			{/each}
-		</div>
-	</BentoItem>
-
-	<!-- Socials -->
-	<BentoItem span="md:col-span-2" title="Connect">
-		<div class="flex h-full flex-wrap items-center gap-x-6 gap-y-2">
-			<a
-				href="https://github.com"
-				class="group/link flex items-center gap-1 font-mono text-sm text-[var(--color-muted)] transition-colors hover:text-[var(--color-primary)]"
-			>
-				GitHub <span class="transition-transform group-hover/link:translate-x-0.5">-></span>
-			</a>
-			<a
-				href="https://twitter.com"
-				class="group/link flex items-center gap-1 font-mono text-sm text-[var(--color-muted)] transition-colors hover:text-[var(--color-primary)]"
-			>
-				Twitter <span class="transition-transform group-hover/link:translate-x-0.5">-></span>
-			</a>
-			<a
-				href="mailto:hello@example.com"
-				class="group/link flex items-center gap-1 font-mono text-sm text-[var(--color-muted)] transition-colors hover:text-white"
-			>
-				Email <span class="transition-transform group-hover/link:translate-x-0.5">-></span>
-			</a>
-		</div>
-	</BentoItem>
-</div>
-
-<section class="animate-in fade-in slide-in-from-bottom-8 delay-200 duration-1000">
-	<header class="mb-8 flex items-center justify-between border-b border-[var(--color-border)] pb-2">
-		<h2 class="font-mono text-sm tracking-wider text-[var(--color-muted)] uppercase">
-			Recent Transmissions
-		</h2>
-		<a
-			href="/blog"
-			class="font-mono text-sm text-[var(--color-muted)] transition-colors hover:text-[var(--color-primary)]"
-			>View All -></a
+<div class="section-enter flex min-h-[100dvh] flex-col items-center justify-center px-6">
+	<div class="w-full max-w-lg">
+		<!-- Name -->
+		<h1
+			class="mb-3 text-5xl font-bold tracking-tight sm:text-6xl"
+			style="font-family: var(--font-serif);"
 		>
-	</header>
+			{siteConfig.author}
+		</h1>
+		<p class="mb-20 text-sm text-[var(--color-muted)]">
+			{siteConfig.description}
+		</p>
 
-	<div class="space-y-4">
-		{#each data.posts as post}
-			<PostCard {...post} />
-		{/each}
+		<!-- Index -->
+		<nav class="mb-16">
+			<a href="/about" class="index-item">
+				<span class="index-number">01</span>
+				<span class="index-label">About</span>
+			</a>
+			<a href="/experience" class="index-item">
+				<span class="index-number">02</span>
+				<span class="index-label">Experience</span>
+			</a>
+			<a href="/blog" class="index-item">
+				<span class="index-number">03</span>
+				<span class="index-label">Blog</span>
+			</a>
+			<a href="/now" class="index-item">
+				<span class="index-number">04</span>
+				<span class="index-label">Now</span>
+			</a>
+		</nav>
+
+		<!-- Latest post -->
+		{#if latestPost}
+			<div class="mb-16">
+				<p class="mb-3 font-mono text-[10px] tracking-wider text-[var(--color-muted)] uppercase">
+					Latest
+				</p>
+				<a
+					href="/blog/{latestPost.slug}"
+					class="group flex items-baseline justify-between gap-4 transition-colors"
+				>
+					<span
+						class="text-sm text-[var(--color-muted)] transition-colors group-hover:text-[var(--color-foreground)]"
+					>
+						{latestPost.title}
+					</span>
+					<span
+						class="shrink-0 font-mono text-xs text-[var(--color-border)] transition-colors group-hover:text-[var(--color-muted)]"
+					>
+						{latestDate}
+					</span>
+				</a>
+			</div>
+		{/if}
+
+		<!-- Status -->
+		<div class="space-y-2 text-xs text-[var(--color-muted)]">
+			<div class="mb-4 h-px w-8 bg-[var(--color-border)]"></div>
+			<p>Currently at <span class="text-[var(--color-foreground)]">AS White Global</span></p>
+			<p class="flex items-center gap-2">
+				<span class="relative flex h-1.5 w-1.5">
+					<span
+						class="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--color-primary)] opacity-75 duration-[2000ms]"
+					></span>
+					<span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-[var(--color-primary)]"
+					></span>
+				</span>
+				Open to work
+			</p>
+			<a
+				href="mailto:hddang219@gmail.com"
+				class="inline-block transition-colors hover:text-[var(--color-primary)]"
+			>
+				hddang219@gmail.com
+			</a>
+		</div>
 	</div>
-</section>
+</div>

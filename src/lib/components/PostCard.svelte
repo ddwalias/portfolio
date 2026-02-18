@@ -7,41 +7,31 @@
 	}
 
 	let { title, date, excerpt, slug }: Props = $props();
+	console.log(title);
 
-	// Format date nicely
 	let formattedDate = $derived(
 		new Date(date).toLocaleDateString('en-US', {
 			year: 'numeric',
-			month: 'long',
-			day: 'numeric'
+			month: 'short'
 		})
 	);
 </script>
 
-<a href={`/blog/${slug}`} class="group mb-6 block">
-	<article
-		class="spotlight-border rounded-xl border-2 border-[var(--color-border)] bg-black/20 p-5 backdrop-blur-sm transition-all duration-300 hover:shadow-[0_0_15px_var(--color-primary-glow)]"
-	>
-		<div class="mb-3 flex items-center justify-between">
-			<time datetime={date} class="font-mono text-xs text-[var(--color-muted)]">
-				{formattedDate}
-			</time>
+<a href={`/blog/${slug}`} class="group block py-4 transition-all duration-200">
+	<div class="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-6">
+		<time datetime={date} class="shrink-0 font-mono text-xs text-[var(--color-muted)] sm:w-20">
+			{formattedDate}
+		</time>
 
-			<span
-				class="font-mono text-xs text-[var(--color-primary)] opacity-0 transition-opacity group-hover:opacity-100"
+		<div class="min-w-0 flex-1">
+			<h3
+				class="text-base font-semibold tracking-tight transition-colors group-hover:text-[var(--color-primary)]"
 			>
-				Read Post ->
-			</span>
+				{title}
+			</h3>
+			<p class="mt-1 line-clamp-1 text-sm text-[var(--color-muted)]">
+				{excerpt}
+			</p>
 		</div>
-
-		<h2
-			class="mb-2 text-lg font-semibold tracking-tight transition-colors group-hover:text-[var(--color-primary)]"
-		>
-			{title}
-		</h2>
-
-		<p class="line-clamp-2 text-sm leading-relaxed text-[var(--color-muted)]">
-			{excerpt}
-		</p>
-	</article>
+	</div>
 </a>
